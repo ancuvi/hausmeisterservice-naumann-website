@@ -1,0 +1,89 @@
+===========================================================================
+ PROMPT FÜR CLAUDE — Website "Hausmeisterservice Rico Naumann"
+ (einfach diesen Text zusammen mit dem Ordner einfügen)
+===========================================================================
+
+Du bist ein erstklassiger Webdesigner und Frontend-Entwickler. Baue mir aus den
+Inhalten in diesem Ordner eine moderne, hochwertige Website für einen
+Hausmeisterservice. Die alte Seite war ein schlichter Canva-Baukasten ohne
+Animationen — die neue soll DEUTLICH professioneller, edler und lebendiger
+wirken. Qualität wie eine richtig gut gemachte Agentur-Website.
+
+------------------------------------------------------------
+1) WO ALLES LIEGT
+------------------------------------------------------------
+- BRIEFING.md ............ Stil, Farben, Tonalität, Kontaktdaten, Ziele (BITTE ZUERST LESEN)
+- inhalte/01–09 .......... alle Texte, in der richtigen Reihenfolge (Sektion für Sektion)
+- bilder/ ................ alle Fotos + Logo; bilder/BILDER-LISTE.md sagt, welches Bild wohin gehört
+
+Nutze die echten Texte und Bilder 1:1 — nichts erfinden, nichts weglassen.
+Kleinere Tippfehler dürfen still korrigiert werden.
+
+------------------------------------------------------------
+2) TECHNIK (WICHTIG)
+------------------------------------------------------------
+- Baue ein vollständiges **Astro**-Projekt (statisch), das direkt über
+  GitHub + Netlify deploybar ist. Eigene Domain folgt später (www.hs-naumann.de).
+- Saubere Projektstruktur, Komponenten pro Sektion, Bilder optimiert einbinden.
+- Kontaktformular über **Netlify Forms** (Name, E-Mail, Telefon, Nachricht) —
+  kein eigenes Backend.
+- Liefere am Ende ein lauffähiges Projekt inkl. README mit kurzer
+  Deploy-Anleitung (npm install / npm run dev / Push zu GitHub / Netlify).
+
+------------------------------------------------------------
+3) DESIGN — SO SOLL ES AUSSEHEN
+------------------------------------------------------------
+- Modern, klar, vertrauenswürdig, regional-bodenständig. Slogan: "Kompetent. Schnell. Persönlich."
+- Farben aus BRIEFING.md als ORIENTIERUNG (Hauptblau #216CB4, Akzent #1594CB,
+  hell #E1F3FF, grau #EEEEF0, Footer-Navy #0C2B40). Du darfst sie verfeinern,
+  abstufen, Verläufe/Akzente ergänzen — mach es schön.
+- Hochwertige Typografie (z. B. Inter / Poppins / Sora), klare Hierarchie,
+  großzügiger Weißraum, abgerundete Ecken, weiche Schatten.
+- Voll responsive (Mobile-First), sauber auf Handy UND Desktop.
+- Gute Barrierefreiheit & Performance (semantisches HTML, alt-Texte, Lighthouse-tauglich).
+
+------------------------------------------------------------
+4) ANIMATIONEN & MODERNE ELEMENTE (BITTE RICHTIG GEIL MACHEN)
+------------------------------------------------------------
+- Sanfte Scroll-Reveal-Animationen: Sektionen / Karten faden & sliden beim
+  Reinscrollen elegant ein (gestaffelt / "stagger").
+- Hero mit Wow-Effekt: leichter Parallax oder Ken-Burns-Zoom auf dem Hintergrundbild,
+  animierte Headline, sanft pulsierender/hover-reagierender CTA-Button.
+- Sticky-Header mit Logo + Anker-Navigation (Leistungen, Über uns, Einsatzgebiet,
+  Erfahrung, Kontakt), der beim Scrollen dezent kompakter/transparenter wird.
+- Smooth-Scroll zu den Ankern.
+- Leistungs-Karten mit schönem Hover (Anheben, Schatten, Bild-Zoom, Akzentlinie).
+- Erfahrung/Meilensteine als animierter, vertikaler Zeitstrahl.
+- Testimonials hübsch als Karten oder dezenter Slider/Marquee.
+- Mikro-Interaktionen überall (Buttons, Links), aber dezent — edel statt verspielt.
+- Bitte "prefers-reduced-motion" respektieren (Animationen für empfindliche Nutzer reduzieren).
+
+------------------------------------------------------------
+5) SEITENSTRUKTUR
+------------------------------------------------------------
+WICHTIG: Bau es als **einseitige Website (One-Pager)** — alle Inhalte auf EINER
+Seite untereinander, die Navigation springt per Smooth-Scroll zu den Abschnitten.
+Nur Impressum und Datenschutz sind aus rechtlichen Gründen separate Unterseiten.
+
+Startseite (One-Pager) in dieser Reihenfolge:
+  1. Hero (01)            5. Erfahrung & Meilensteine (05)
+  2. Leistungen (02)      6. Testimonials (06)
+  3. Über uns (03)        7. Kontakt + Kontaktformular (07)
+  4. Einsatzgebiet (04)   8. Footer (08)
+
+Unterseiten:
+  - Impressum (09) — vollständig vorhanden, eigene Seite, im Footer verlinkt.
+  - Datenschutz — Platzhalterseite anlegen und im Footer verlinken; der Text wird
+    später (über eRecht24) ergänzt. Bitte eine leere, formatierte Seite mit
+    Überschrift "Datenschutzerklärung" und Hinweis "Inhalt folgt" vorbereiten.
+
+------------------------------------------------------------
+6) KLEINE EXTRAS
+------------------------------------------------------------
+- Telefon-/Mobilnummern als klickbare tel:-Links, E-Mail als mailto:-Link.
+- Im Footer die Leistungen als Anker-Links zur jeweiligen Sektion.
+- "Start"-Button im Kontaktbereich scrollt sauber nach oben.
+- Optional dezent: Karte/Ortshinweis Lichtenau/Chemnitz im Einsatzgebiet/Kontakt.
+
+Leg jetzt los: zuerst BRIEFING.md lesen, dann die Sektionen 01–09 umsetzen.
+Mach es richtig schön. 🚀

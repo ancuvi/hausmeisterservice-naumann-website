@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Manrope',system-ui,sans-serif; color:#0C2B40; background:#ffffff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { text-decoration:none; color:inherit; }
+  section { scroll-margin-top:88px; }
+  @keyframes kb { 0%{ transform:scale(1.08) translate(0,0);} 100%{ transform:scale(1.22) translate(-2%,-3%);} }
+  @keyframes pulse { 0%,100%{ box-shadow:0 10px 30px -8px rgba(33,108,180,.55), 0 0 0 0 rgba(21,148,203,.45);} 50%{ box-shadow:0 14px 38px -8px rgba(33,108,180,.65), 0 0 0 14px rgba(21,148,203,0);} }
+  @keyframes floaty { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(9px);} }
+  @keyframes spinslow { to { transform:rotate(360deg);} }
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1); }
+  .reveal.in { opacity:1; transform:none; }
+  .grow { transition:transform .6s cubic-bezier(.16,.84,.44,1); }
+  .svc:hover .grow { transform:scale(1.09); }
+  .svc { transition:transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s ease; }
+  .svc:hover { transform:translateY(-10px); box-shadow:0 28px 50px -22px rgba(12,43,64,.55); }
+  .svc:hover .accent { width:64px; }
+  .navlink { position:relative; }
+  .navlink::after { content:''; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:#1594CB; transition:width .35s ease; }
+  .navlink:hover::after { width:100%; }
+  .btn-primary { transition:transform .3s cubic-bezier(.16,.84,.44,1), box-shadow .3s ease, background .3s ease; }
+  .btn-primary:hover { transform:translateY(-3px); }
+  .btn-ghost { transition:all .3s ease; }
+  .btn-ghost:hover { background:#216CB4; color:#fff !important; border-color:#216CB4 !important; }
+  .hdr { transition:padding .35s ease, background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease; }
+  .hdr.scrolled { padding:10px 0 !important; background:rgba(255,255,255,.86) !important; box-shadow:0 8px 30px -12px rgba(12,43,64,.28) !important; backdrop-filter:blur(14px); }
+  .hdr.scrolled .hdr-logo { height:44px !important; }
+  .hdr.scrolled .hdr-name { color:#0C2B40 !important; }
+  .hdr.scrolled .hdr-nav a { color:#0C2B40 !important; }
+  .field input, .field textarea { transition:border-color .25s ease, box-shadow .25s ease; }
+  .field input:focus, .field textarea:focus { outline:none; border-color:#1594CB; box-shadow:0 0 0 4px rgba(21,148,203,.16); }
+  .mlink { transition:color .25s ease, transform .25s ease; }
+  .mlink:hover { color:#1594CB; transform:translateX(3px); }
+  .ccard { transition:transform .4s cubic-bezier(.16,.84,.44,1), box-shadow .4s ease, background .35s ease, border-color .35s ease; }
+  .ccard:hover { transform:translateY(-8px); box-shadow:0 30px 55px -26px rgba(0,0,0,.6); }
+  .ccard:hover .arr { transform:translateX(5px); }
+  .arr { transition:transform .35s ease; }
+  .mobnav { transition:max-height .45s ease, opacity .35s ease; overflow:hidden; }
+  .burger span { transition:transform .35s ease, opacity .25s ease; }
+  .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2){ opacity:0; }
+  .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  @media (max-width:860px){ .hdr-nav, .hdr-cta { display:none !important; } .burger { display:flex !important; } }
+  @media (min-width:861px){ .mobnav { display:none !important; } }
+  @media (prefers-reduced-motion: reduce){
+    html { scroll-behavior:auto; }
+    .reveal { opacity:1 !important; transform:none !important; transition:none !important; }
+    .kb, .floaty, .pulsecta, .spinslow { animation:none !important; }
+  }
+</style>
+</helmet>
+
+<div style="position:relative; width:100%;">
+
+  <!-- ===== HEADER ===== -->
+  <header class="hdr {{ hdrClass }}" style="position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 0;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+      <a href="#top" style="display:flex; align-items:center; gap:13px;">
+        <img class="hdr-logo" src="bilder/logo.png" alt="Logo Hausmeisterservice Rico Naumann" style="height:54px; width:auto; transition:height .35s ease; filter:drop-shadow(0 3px 8px rgba(12,43,64,.25));">
+        <span class="hdr-name" style="font-family:'Sora',sans-serif; font-weight:700; font-size:18px; line-height:1.1; color:#fff; text-shadow:0 1px 12px rgba(12,43,64,.45);">Hausmeisterservice<br><span style="font-weight:500; font-size:14px; color:#1594CB;">Rico Naumann</span></span>
+      </a>
+      <nav class="hdr-nav" style="display:flex; align-items:center; gap:30px;">
+        <a class="navlink" href="#leistungen" style="font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 10px rgba(12,43,64,.4);">Leistungen</a>
+        <a class="navlink" href="#ueber" style="font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 10px rgba(12,43,64,.4);">Über uns</a>
+        <a class="navlink" href="#einsatzgebiet" style="font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 10px rgba(12,43,64,.4);">Einsatzgebiet</a>
+        <a class="navlink" href="#erfahrung" style="font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 10px rgba(12,43,64,.4);">Erfahrung</a>
+      </nav>
+      <a class="hdr-cta btn-primary" href="#kontakt" style="background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; box-shadow:0 8px 22px -8px rgba(33,108,180,.6);">Kontakt</a>
+      <button class="burger {{ menuClass }}" onClick="{{ toggleMenu }}" aria-label="Menü" style="display:none; flex-direction:column; gap:5px; background:transparent; border:none; cursor:pointer; padding:6px;">
+        <span style="display:block; width:26px; height:2.5px; background:#fff; border-radius:2px;"></span>
+        <span style="display:block; width:26px; height:2.5px; background:#fff; border-radius:2px;"></span>
+        <span style="display:block; width:26px; height:2.5px; background:#fff; border-radius:2px;"></span>
+      </button>
+    </div>
+    <div class="mobnav" style="max-height:{{ mobMax }}; opacity:{{ mobOpacity }}; background:rgba(255,255,255,.97); backdrop-filter:blur(14px); box-shadow:0 12px 30px -12px rgba(12,43,64,.3);">
+      <div style="display:flex; flex-direction:column; padding:8px 28px 18px;">
+        <a onClick="{{ closeMenu }}" href="#leistungen" style="padding:13px 0; font-weight:600; color:#0C2B40; border-bottom:1px solid #EEEEF0;">Leistungen</a>
+        <a onClick="{{ closeMenu }}" href="#ueber" style="padding:13px 0; font-weight:600; color:#0C2B40; border-bottom:1px solid #EEEEF0;">Über uns</a>
+        <a onClick="{{ closeMenu }}" href="#einsatzgebiet" style="padding:13px 0; font-weight:600; color:#0C2B40; border-bottom:1px solid #EEEEF0;">Einsatzgebiet</a>
+        <a onClick="{{ closeMenu }}" href="#erfahrung" style="padding:13px 0; font-weight:600; color:#0C2B40; border-bottom:1px solid #EEEEF0;">Erfahrung</a>
+        <a onClick="{{ closeMenu }}" href="#kontakt" style="margin-top:14px; text-align:center; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; font-weight:700; padding:13px; border-radius:999px;">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="top" style="position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden;">
+    <div style="position:absolute; inset:0; overflow:hidden;">
+      <img class="kb" src="bilder/hero-haus.webp" alt="Einfamilienhaus mit Firmen-Transporter von Hausmeisterservice Rico Naumann" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 38%; animation:kb 22s ease-in-out infinite alternate;">
+    </div>
+    <div style="position:absolute; inset:0; background:linear-gradient(105deg, rgba(12,43,64,.92) 0%, rgba(20,70,120,.78) 38%, rgba(12,43,64,.30) 72%, rgba(12,43,64,.12) 100%);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(12,43,64,.55), transparent 40%);"></div>
+
+    <div style="position:relative; z-index:2; max-width:1200px; width:100%; margin:0 auto; padding:130px 28px 90px;">
+      <div style="max-width:680px;">
+        <div class="reveal" style="display:inline-flex; align-items:center; gap:10px; background:rgba(21,148,203,.18); border:1px solid rgba(225,243,255,.35); backdrop-filter:blur(6px); padding:8px 16px 8px 10px; border-radius:999px; margin-bottom:26px;">
+          <img src="bilder/logo.png" alt="" style="height:30px; width:auto;">
+          <span style="font-family:'Sora',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:.14em; color:#E1F3FF; text-transform:uppercase;">Est. 2025 · Raum Chemnitz</span>
+        </div>
+        <h1 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(38px,6vw,68px); line-height:1.04; color:#fff; letter-spacing:-.02em; text-shadow:0 4px 30px rgba(12,43,64,.4);">Zuverlässiger<br>Hausmeisterservice<br><span style="background:linear-gradient(120deg,#E1F3FF,#1594CB); -webkit-background-clip:text; background-clip:text; color:transparent;">für Ihr Objekt</span></h1>
+        <p class="reveal" style="margin-top:24px; font-family:'Sora',sans-serif; font-weight:600; font-size:clamp(18px,2.4vw,24px); color:#E1F3FF; letter-spacing:.01em;">Kompetent. <span style="color:#fff;">Schnell.</span> Persönlich.</p>
+        <p class="reveal" style="margin-top:16px; font-size:17px; line-height:1.6; color:rgba(225,243,255,.85); max-width:520px;">Rundum-sorglos-Betreuung für private und gewerbliche Immobilien – mit festem persönlichem Ansprechpartner und transparenten Preisen.</p>
+        <div class="reveal" style="margin-top:38px; display:flex; flex-wrap:wrap; align-items:center; gap:18px;">
+          <a class="btn-primary pulsecta" href="#kontakt" style="background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px 34px; border-radius:999px; animation:pulse 3.2s ease-in-out infinite;">Kostenlose Beratung vereinbaren</a>
+          <a class="btn-ghost" href="#leistungen" style="border:1.5px solid rgba(225,243,255,.6); color:#fff; font-family:'Sora',sans-serif; font-weight:600; font-size:15px; padding:16px 28px; border-radius:999px;">Unsere Leistungen</a>
+        </div>
+      </div>
+    </div>
+    <a href="#leistungen" class="floaty" style="position:absolute; left:50%; bottom:26px; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px; animation:floaty 2.6s ease-in-out infinite;">
+      <span style="font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:rgba(225,243,255,.75);">Scrollen</span>
+      <span style="display:block; width:1px; height:38px; background:linear-gradient(to bottom, rgba(225,243,255,.8), transparent);"></span>
+    </a>
+  </section>
+
+  <!-- ===== TRUST STRIP ===== -->
+  <div style="background:#0C2B40; color:#fff;">
+    <div style="max-width:1200px; margin:0 auto; padding:28px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px;">
+      <div class="reveal" style="display:flex; align-items:center; gap:14px;">
+        <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:34px; color:#1594CB;">10+</span>
+        <span style="font-size:14px; line-height:1.35; color:#cfe3f3;">Jahre Erfahrung in der<br>Objektbetreuung</span>
+      </div>
+      <div class="reveal" style="display:flex; align-items:center; gap:14px;">
+        <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:34px; color:#1594CB;">6</span>
+        <span style="font-size:14px; line-height:1.35; color:#cfe3f3;">Leistungen aus<br>einer Hand</span>
+      </div>
+      <div class="reveal" style="display:flex; align-items:center; gap:14px;">
+        <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:34px; color:#1594CB;">1:1</span>
+        <span style="font-size:14px; line-height:1.35; color:#cfe3f3;">Fester persönlicher<br>Ansprechpartner</span>
+      </div>
+      <div class="reveal" style="display:flex; align-items:center; gap:14px;">
+        <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:34px; color:#1594CB;">0 €</span>
+        <span style="font-size:14px; line-height:1.35; color:#cfe3f3;">Beratung –<br>unverbindlich & fair</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LEISTUNGEN ===== -->
+  <section id="leistungen" style="position:relative; background:linear-gradient(165deg,#0C2B40 0%,#143a5c 55%,#216CB4 130%); padding:104px 0 110px;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 28px;">
+      <div style="max-width:640px; margin-bottom:54px;">
+        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Was wir für Sie tun</p>
+        <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#fff; line-height:1.08; letter-spacing:-.02em;">Leistungen</h2>
+        <p class="reveal" style="margin-top:18px; font-size:17px; line-height:1.6; color:rgba(225,243,255,.8);">Alles rund um Ihre Immobilie – sauber, sicher und werterhaltend. Sechs Kernleistungen, die wir flexibel an Ihren Bedarf anpassen.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:26px;">
+        <sc-for list="{{ services }}" as="s">
+          <div class="svc reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 18px 40px -28px rgba(0,0,0,.5);">
+            <div style="position:relative; height:188px; overflow:hidden;">
+              <img class="grow" src="{{ s.img }}" alt="{{ s.alt }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(12,43,64,.35), transparent 55%);"></div>
+              <span style="position:absolute; top:14px; left:14px; background:rgba(255,255,255,.92); color:#216CB4; font-family:'Sora',sans-serif; font-weight:700; font-size:13px; width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;">{{ s.no }}</span>
+            </div>
+            <div style="padding:24px 24px 28px;">
+              <h3 style="font-family:'Sora',sans-serif; font-weight:700; font-size:20px; color:#0C2B40;">{{ s.title }}</h3>
+              <div class="accent" style="width:38px; height:3px; border-radius:3px; background:linear-gradient(90deg,#216CB4,#1594CB); margin:13px 0 15px; transition:width .45s ease;"></div>
+              <p style="font-size:14.5px; line-height:1.62; color:#516577;">{{ s.text }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ÜBER UNS ===== -->
+  <section id="ueber" style="background:#fff; padding:104px 0;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:60px; align-items:center;">
+      <div class="reveal" style="position:relative;">
+        <div style="position:absolute; top:-22px; left:-22px; width:120px; height:120px; border-radius:24px; background:#E1F3FF; z-index:0;"></div>
+        <div style="position:absolute; bottom:-22px; right:-22px; width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#216CB4,#1594CB); opacity:.18; z-index:0;"></div>
+        <img src="bilder/ueber-uns-fassade.png" alt="Moderne weiße Hausfassade mit Eingangstür" style="position:relative; z-index:1; width:100%; border-radius:22px; box-shadow:0 30px 60px -30px rgba(12,43,64,.5); display:block;">
+        <div style="position:absolute; z-index:2; bottom:24px; left:24px; background:rgba(255,255,255,.95); backdrop-filter:blur(8px); border-radius:16px; padding:16px 20px; box-shadow:0 16px 30px -16px rgba(12,43,64,.4); display:flex; align-items:center; gap:13px;">
+          <img src="bilder/logo.png" alt="" style="height:42px;">
+          <div>
+            <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#0C2B40; line-height:1.1;">Rico Naumann</p>
+            <p style="font-size:12.5px; color:#1594CB; font-weight:600;">Ihr Ansprechpartner</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Wer wir sind</p>
+        <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#0C2B40; line-height:1.08; letter-spacing:-.02em;">Über uns</h2>
+        <p class="reveal" style="margin-top:22px; font-size:17px; line-height:1.72; color:#3f5466;">Wir sind ein regionaler Hausmeisterservice mit über zehn Jahren Erfahrung in der ganzheitlichen Objektbetreuung. Private Hauseigentümer, WEG-Verwalter und Gewerbekunden schätzen unsere All-in-One-Leistungen: von regelmäßigen Objektkontrollen über Gartenpflege bis hin zu kleinen Reparaturen und Glühbirnenwechseln.</p>
+        <p class="reveal" style="margin-top:16px; font-size:17px; line-height:1.72; color:#3f5466;">Dabei legen wir großen Wert auf transparente Preise ohne versteckte Kosten. Mit einem festen persönlichen Ansprechpartner garantieren wir kurze Kommunikationswege und individuellen Service.</p>
+        <div class="reveal" style="margin-top:30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px;">
+          <div style="display:flex; align-items:center; gap:12px; background:#F4F9FE; border:1px solid #E1F3FF; border-radius:14px; padding:14px 16px;">
+            <span style="flex:none; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">✓</span>
+            <span style="font-weight:600; font-size:14.5px; color:#0C2B40;">Transparente Preise</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; background:#F4F9FE; border:1px solid #E1F3FF; border-radius:14px; padding:14px 16px;">
+            <span style="flex:none; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">✓</span>
+            <span style="font-weight:600; font-size:14.5px; color:#0C2B40;">Kurze Wege</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; background:#F4F9FE; border:1px solid #E1F3FF; border-radius:14px; padding:14px 16px;">
+            <span style="flex:none; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">✓</span>
+            <span style="font-weight:600; font-size:14.5px; color:#0C2B40;">All-in-One Service</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; background:#F4F9FE; border:1px solid #E1F3FF; border-radius:14px; padding:14px 16px;">
+            <span style="flex:none; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">✓</span>
+            <span style="font-weight:600; font-size:14.5px; color:#0C2B40;">Privat & Gewerbe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EINSATZGEBIET ===== -->
+  <section id="einsatzgebiet" style="position:relative; background:#EEEEF0; padding:104px 0; overflow:hidden;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:56px; align-items:center;">
+      <div>
+        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Wo wir für Sie da sind</p>
+        <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#0C2B40; line-height:1.08; letter-spacing:-.02em;">Unser Einsatzgebiet</h2>
+        <p class="reveal" style="margin-top:22px; font-size:17px; line-height:1.72; color:#3f5466;">Unser Einsatzgebiet umfasst das Stadtgebiet Chemnitz und Umgebung. Wir bieten privaten und gewerblichen Kunden einen umfassenden Hausmeisterservice: Reparaturen, Gartenpflege, Treppenhausreinigung, Winterdienst und Kleintransporte.</p>
+        <p class="reveal" style="margin-top:16px; font-size:17px; line-height:1.72; color:#3f5466;">Mit flexiblen Servicezeiten stehen wir Ihnen persönlich zur Seite. Verlassen Sie sich auf unser erfahrenes Team, das zuverlässig für Ordnung, Sicherheit und Werterhalt sorgt – ob Wohnhaus, Bürogebäude oder Gewerbefläche.</p>
+        <div class="reveal" style="margin-top:28px; display:flex; flex-wrap:wrap; gap:10px;">
+          <span style="background:#fff; border:1px solid #d9e6f2; color:#216CB4; font-weight:600; font-size:14px; padding:9px 18px; border-radius:999px;">Chemnitz</span>
+          <span style="background:#fff; border:1px solid #d9e6f2; color:#216CB4; font-weight:600; font-size:14px; padding:9px 18px; border-radius:999px;">Lichtenau</span>
+          <span style="background:#fff; border:1px solid #d9e6f2; color:#216CB4; font-weight:600; font-size:14px; padding:9px 18px; border-radius:999px;">Niederlichtenau</span>
+          <span style="background:#fff; border:1px solid #d9e6f2; color:#216CB4; font-weight:600; font-size:14px; padding:9px 18px; border-radius:999px;">+ Umgebung</span>
+        </div>
+      </div>
+      <div class="reveal" style="position:relative;">
+        <img src="bilder/einsatzgebiet.png" alt="Einsatzgebiet Chemnitz und Umgebung" style="width:100%; border-radius:22px; box-shadow:0 30px 60px -30px rgba(12,43,64,.45); display:block;">
+        <div style="position:absolute; bottom:20px; left:20px; right:20px; background:rgba(12,43,64,.88); backdrop-filter:blur(8px); border-radius:16px; padding:16px 20px; display:flex; align-items:center; gap:13px;">
+          <span class="spinslow" style="flex:none; width:12px; height:12px; border-radius:50%; background:#1594CB; box-shadow:0 0 0 5px rgba(21,148,203,.25);"></span>
+          <p style="color:#E1F3FF; font-size:14px; line-height:1.4;"><strong style="color:#fff;">Standort Lichtenau</strong> · Untere Hauptstraße 93 · zentral im Raum Chemnitz</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ERFAHRUNG / TIMELINE ===== -->
+  <section id="erfahrung" style="background:linear-gradient(180deg,#E1F3FF,#f4fbff); padding:104px 0;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:56px;">
+      <div>
+        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Unser Weg</p>
+        <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#0C2B40; line-height:1.08; letter-spacing:-.02em;">Erfahrung &amp;<br>Leistungen</h2>
+        <p class="reveal" style="margin-top:20px; font-size:17px; line-height:1.7; color:#3f5466; max-width:380px;">Von der Gründung bis zum heutigen Vollservice – wir entwickeln uns stetig weiter, damit Ihre Immobilie in den besten Händen ist.</p>
+      </div>
+      <div style="position:relative; padding-left:34px;">
+        <div style="position:absolute; left:7px; top:6px; bottom:6px; width:2px; background:linear-gradient(to bottom,#1594CB,#216CB4,rgba(33,108,180,.2));"></div>
+        <sc-for list="{{ milestones }}" as="m" hint-placeholder-count="3">
+          <div class="reveal" style="position:relative; margin-bottom:34px;">
+            <span style="position:absolute; left:-34px; top:4px; width:16px; height:16px; border-radius:50%; background:#fff; border:3px solid #1594CB; box-shadow:0 0 0 5px rgba(21,148,203,.14);"></span>
+            <div style="background:#fff; border-radius:18px; padding:24px 26px; box-shadow:0 16px 36px -26px rgba(12,43,64,.45);">
+              <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#1594CB;">{{ m.tag }}</span>
+              <h3 style="font-family:'Sora',sans-serif; font-weight:700; font-size:19px; color:#0C2B40; margin:8px 0 14px; line-height:1.25;">{{ m.title }}</h3>
+              <ul style="list-style:none; display:flex; flex-direction:column; gap:9px;">
+                <sc-for list="{{ m.points }}" as="p" hint-placeholder-count="3">
+                  <li style="display:flex; gap:11px; font-size:14.5px; line-height:1.55; color:#516577;">
+                    <span style="flex:none; margin-top:7px; width:6px; height:6px; border-radius:50%; background:#216CB4;"></span>
+                    <span>{{ p }}</span>
+                  </li>
+                </sc-for>
+              </ul>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section style="position:relative; background:linear-gradient(160deg,#216CB4,#143a5c); padding:104px 0; overflow:hidden;">
+    <div style="position:absolute; top:-80px; right:-80px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle,rgba(21,148,203,.4),transparent 70%);"></div>
+    <div style="max-width:1200px; margin:0 auto; padding:0 28px; position:relative;">
+      <div style="text-align:center; max-width:620px; margin:0 auto 54px;">
+        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#9fd3ec; margin-bottom:14px;">Stimmen unserer Kunden</p>
+        <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#fff; line-height:1.08; letter-spacing:-.02em;">Was unsere Kunden sagen</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:26px; align-items:start;">
+        <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+          <div class="reveal" style="background:#fff; border-radius:22px; padding:32px 30px; box-shadow:0 24px 50px -30px rgba(0,0,0,.6);">
+            <div style="display:flex; gap:3px; margin-bottom:16px;">
+              <sc-for list="{{ t.stars }}" as="st" hint-placeholder-count="5">
+                <span style="color:#1594CB; font-size:18px;">★</span>
+              </sc-for>
+            </div>
+            <p style="font-size:15.5px; line-height:1.7; color:#3f5466;">{{ t.quote }}</p>
+            <div style="margin-top:24px; display:flex; align-items:center; gap:13px;">
+              <span style="flex:none; width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:700; font-size:17px;">{{ t.initials }}</span>
+              <div>
+                <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; color:#0C2B40;">{{ t.name }}</p>
+                <p style="font-size:13px; color:#1594CB; font-weight:600;">{{ t.role }}</p>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KONTAKT ===== -->
+  <section id="kontakt" style="position:relative; overflow:hidden;">
+    <div style="position:absolute; inset:0;">
+      <img src="bilder/kontakt.png" alt="Mitarbeiter vor Wohnanlage mit Firmen-Transporter" style="width:100%; height:100%; object-fit:cover; object-position:center;">
+    </div>
+    <div style="position:absolute; inset:0; background:linear-gradient(115deg, rgba(12,43,64,.96) 0%, rgba(20,58,92,.9) 46%, rgba(12,43,64,.55) 100%);"></div>
+    <div style="position:relative; z-index:2; max-width:1080px; margin:0 auto; padding:106px 28px; text-align:center;">
+      <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Kontakt</p>
+      <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,48px); color:#fff; line-height:1.06; letter-spacing:-.02em;">Lassen Sie uns sprechen</h2>
+      <p class="reveal" style="margin:20px auto 0; font-size:17px; line-height:1.7; color:rgba(225,243,255,.85); max-width:560px;">Ob Frage, unverbindliches Angebot oder kurzfristiger Einsatz – melden Sie sich direkt bei uns. Ein Anruf genügt, wir kümmern uns persönlich.</p>
+
+      <div class="reveal" style="margin-top:46px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; text-align:left;">
+        <a class="ccard" href="tel:+4915126182794" style="background:linear-gradient(150deg,#216CB4,#1594CB); border-radius:22px; padding:30px 28px; color:#fff; box-shadow:0 24px 50px -26px rgba(0,0,0,.6); display:flex; flex-direction:column; gap:18px;">
+          <span style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="width:50px; height:50px; border-radius:14px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:23px;">📱</span>
+            <span style="font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:rgba(255,255,255,.22); padding:5px 11px; border-radius:999px;">Am schnellsten</span>
+          </span>
+          <span>
+            <span style="display:block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:rgba(225,243,255,.85);">Mobil</span>
+            <span style="display:block; margin-top:3px; font-family:'Sora',sans-serif; font-weight:700; font-size:23px;">0151 / 26182794</span>
+          </span>
+          <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#E1F3FF;">Jetzt anrufen <span class="arr">→</span></span>
+        </a>
+
+        <a class="ccard" href="tel:+4937206891317" style="background:rgba(255,255,255,.07); border:1px solid rgba(225,243,255,.18); backdrop-filter:blur(8px); border-radius:22px; padding:30px 28px; color:#fff; display:flex; flex-direction:column; gap:18px;">
+          <span style="width:50px; height:50px; border-radius:14px; background:rgba(21,148,203,.28); border:1px solid rgba(225,243,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px;">☎</span>
+          <span>
+            <span style="display:block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:#9fd3ec;">Festnetz</span>
+            <span style="display:block; margin-top:3px; font-family:'Sora',sans-serif; font-weight:700; font-size:23px;">037206 / 891317</span>
+          </span>
+          <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#9fd3ec;">Anrufen <span class="arr">→</span></span>
+        </a>
+
+        <a class="ccard" href="mailto:naumann-niederlichtenau@outlook.de" style="background:rgba(255,255,255,.07); border:1px solid rgba(225,243,255,.18); backdrop-filter:blur(8px); border-radius:22px; padding:30px 28px; color:#fff; display:flex; flex-direction:column; gap:18px;">
+          <span style="width:50px; height:50px; border-radius:14px; background:rgba(21,148,203,.28); border:1px solid rgba(225,243,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px;">✉</span>
+          <span>
+            <span style="display:block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:#9fd3ec;">E-Mail</span>
+            <span style="display:block; margin-top:3px; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; word-break:break-all;">naumann-niederlichtenau@outlook.de</span>
+          </span>
+          <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#9fd3ec;">Schreiben <span class="arr">→</span></span>
+        </a>
+      </div>
+
+      <div class="reveal" style="margin-top:30px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+        <span style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.08); border:1px solid rgba(225,243,255,.18); border-radius:999px; padding:10px 18px; font-size:14px; color:#E1F3FF;">📍 Untere Hauptstraße 93, 09244 Lichtenau</span>
+        <span style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.08); border:1px solid rgba(225,243,255,.18); border-radius:999px; padding:10px 18px; font-size:14px; color:#E1F3FF;">⏱ Antwort i. d. R. binnen 1 Werktag</span>
+      </div>
+
+      <a href="#top" class="btn-ghost" style="margin-top:36px; display:inline-flex; align-items:center; gap:9px; border:1.5px solid rgba(225,243,255,.55); color:#fff; font-family:'Sora',sans-serif; font-weight:600; font-size:14px; padding:13px 26px; border-radius:999px;">↑ Zurück zum Start</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background:#0C2B40; color:#cfe0ee;">
+    <div style="max-width:1200px; margin:0 auto; padding:70px 28px 30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:44px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <img src="bilder/logo.png" alt="Logo" style="height:52px;">
+          <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#fff; line-height:1.15;">Hausmeisterservice<br><span style="font-weight:500; font-size:13px; color:#1594CB;">Rico Naumann</span></span>
+        </div>
+        <p style="font-size:14px; line-height:1.7;">Untere Hauptstraße 93<br>09244 Lichtenau (Sachsen)</p>
+        <a class="mlink" href="mailto:naumann-niederlichtenau@outlook.de" style="display:inline-block; margin-top:10px; font-size:14px; color:#9fd3ec;">naumann-niederlichtenau@outlook.de</a>
+        <p style="margin-top:14px; font-family:'Sora',sans-serif; font-weight:600; font-size:13px; color:#1594CB; letter-spacing:.06em;">Kompetent. Schnell. Persönlich.</p>
+      </div>
+      <div>
+        <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:#fff; letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px;">Hausmeisterdienst</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:11px;">
+          <li><a class="mlink" href="#leistungen" style="font-size:14.5px;">Hausmeisterservice</a></li>
+          <li><a class="mlink" href="#leistungen" style="font-size:14.5px;">Reparaturservice</a></li>
+          <li><a class="mlink" href="#leistungen" style="font-size:14.5px;">Gartenpflege</a></li>
+          <li><a class="mlink" href="#leistungen" style="font-size:14.5px;">Winterdienst</a></li>
+          <li><a class="mlink" href="#leistungen" style="font-size:14.5px;">Treppenhausreinigung</a></li>
+          <li><a class="mlink" href="#leistungen" style="font-size:14.5px;">Mülltonnen-Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:#fff; letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px;">Seiten</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:11px;">
+          <li><a class="mlink" href="#kontakt" style="font-size:14.5px;">Kontakt</a></li>
+          <li><a class="mlink" href="Impressum.dc.html" style="font-size:14.5px;">Impressum</a></li>
+          <li><a class="mlink" href="Datenschutz.dc.html" style="font-size:14.5px;">Datenschutz</a></li>
+        </ul>
+        <div style="margin-top:22px; display:flex; flex-direction:column; gap:8px;">
+          <a class="mlink" href="tel:+4937206891317" style="font-size:14.5px; color:#9fd3ec;">☎ 037206 / 891317</a>
+          <a class="mlink" href="tel:+4915126182794" style="font-size:14.5px; color:#9fd3ec;">📱 0151 / 26182794</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.1);">
+      <div style="max-width:1200px; margin:0 auto; padding:20px 28px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;">
+        <p style="font-size:13px; color:#7e96aa;">© {{ year }} Hausmeisterservice Rico Naumann. Alle Rechte vorbehalten.</p>
+        <p style="font-size:13px; color:#7e96aa;">www.hs-naumann.de</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { scrolled: false, menuOpen: false };
+
+  componentDidMount() {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce) {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    } else {
+      this._reveal = () => {
+        const vh = window.innerHeight;
+        document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top < vh * 0.92 && r.bottom > 0) {
+            const sibs = Array.from(el.parentElement.children).filter(c => c.classList.contains('reveal'));
+            const idx = Math.max(0, sibs.indexOf(el));
+            el.style.transitionDelay = Math.min(idx, 4) * 75 + 'ms';
+            el.classList.add('in');
+            // Safety net: if the animation timeline is throttled/paused (e.g. background
+            // tab), force the final visible state so content can never get stuck hidden.
+            setTimeout(() => {
+              el.style.transition = 'none';
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+            }, 1150);
+          }
+        });
+      };
+      window.addEventListener('scroll', this._reveal, { passive: true });
+      window.addEventListener('resize', this._reveal);
+      this._reveal();
+      // re-run a few times to catch late font/layout shifts
+      let n = 0;
+      const tick = () => { this._reveal(); if (++n < 12) setTimeout(tick, 110); };
+      tick();
+    }
+
+    this._onScroll = () => {
+      const s = window.scrollY > 40;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._reveal) {
+      window.removeEventListener('scroll', this._reveal);
+      window.removeEventListener('resize', this._reveal);
+    }
+  }
+
+  renderVals() {
+    return {
+      year: new Date().getFullYear(),
+      hdrClass: this.state.scrolled ? 'scrolled' : '',
+      menuClass: this.state.menuOpen ? 'open' : '',
+      mobMax: this.state.menuOpen ? '340px' : '0px',
+      mobOpacity: this.state.menuOpen ? '1' : '0',
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      services: [
+        { no:'01', img:'bilder/leistung-hausmeister.png', alt:'Modernes Mehrfamilienhaus', title:'Hausmeisterservice', text:'Unser Rundum-sorglos-Paket: Wir übernehmen alle anfallenden Tätigkeiten rund um Ihre Immobilie – von kleinen Reparaturen bis zur regelmäßigen Objektkontrolle. So sparen Sie Zeit und erhalten stets einen gepflegten Außen- und Innenbereich.' },
+        { no:'02', img:'bilder/leistung-reparatur.png', alt:'Handwerker an Deckenplatte', title:'Reparaturservice', text:'Ob tropfender Wasserhahn, defekter Lichtschalter oder beschädigte Tür – unser geschultes Team führt rasch und zuverlässig alle kleineren Instandsetzungsarbeiten durch, damit technische Mängel gar nicht erst zum größeren Problem werden.' },
+        { no:'03', img:'bilder/leistung-garten.png', alt:'Gepflegter Garten mit Rasen', title:'Gartenpflege', text:'Wir bringen Ihren Außenbereich zum Blühen: von Rasenmähen und Unkrautentfernung über Strauch- und Heckenschnitt bis hin zur saisonalen Bepflanzung sorgen wir dafür, dass Ihr Garten jederzeit gepflegt und einladend aussieht.' },
+        { no:'04', img:'bilder/leistung-winterdienst.png', alt:'Schneeschaufel im Schnee', title:'Winterdienst', text:'Schnee und Eis? Nicht mit uns! Ab dem ersten Frost räumen und streuen wir Ihre Wege, Zufahrten und Parkplätze fachgerecht. So gewährleisten wir jederzeit sichere Zugänge und reduzieren das Unfallrisiko.' },
+        { no:'05', img:'bilder/leistung-treppenhaus.png', alt:'Sauberes Treppenhaus', title:'Treppenhausreinigung', text:'Das Treppenhaus ist die Visitenkarte jeder Immobilie. Mit unserer regelmäßigen Reinigung entfernen wir Staub, Schmutz und Verunreinigungen aus allen Bereichen – inkl. Geländer, Fensterbänke und Fliesen.' },
+        { no:'06', img:'bilder/leistung-muelltonne.png', alt:'Person mit Mülltonne', title:'Mülltonnen-Service', text:'Nie wieder vergessene Abholung: Wir stellen Ihre Tonnen termingerecht an die Straße und holen sie nach der Leerung wieder zurück. Auf Wunsch reinigen und desinfizieren wir die Behälter, damit unangenehme Gerüche gar nicht erst entstehen.' }
+      ],
+      milestones: [
+        { tag:'Frühjahr 2025', title:'Gründung Hausmeisterservice Rico Naumann', points:['Gegründet im Frühjahr 2025','Schwerpunkt: regelmäßige Objektkontrollen, Notdiensteinsätze und Gebäudereinigung','Erste Kunden: zwei Mehrfamilienhäuser in der Innenstadt, ein Bürogebäude im Gewerbepark'] },
+        { tag:'Qualifikation', title:'Zertifizierung Gebäudemanagement (IHK)', points:['Präsenzseminar „Qualitätsmanagement in der Immobilienbewirtschaftung"','Schulung in Arbeitsschutz, Brandschutz und umweltgerechter Entsorgung','Anschaffung: professionelle Kehrmaschine, Industriestaubsauger und Hygieneausrüstung'] },
+        { tag:'Heute', title:'Erweiterung des Serviceportfolios', points:['Einführung regelmäßiger Gartenpflege (Rasen mähen, Heckenschnitt, Unkrautbeseitigung)','Pflege von Außenanlagen (Wege, Parkplätze, Beleuchtungskontrolle)'] }
+      ],
+      testimonials: [
+        { name:'Florentine Grabert', role:'Eigentümerin', initials:'FG', stars:[1,1,1,1,1], quote:'„Ich bin mit dem Hausmeisterservice von Rico Naumann sehr zufrieden. Die Arbeiten werden zuverlässig, sorgfältig und termingerecht erledigt. Besonders die freundliche Kommunikation und die schnelle Reaktionszeit bei kurzfristigen Anliegen. Eine klare Weiterempfehlung für alle, die einen engagierten und vertrauenswürdigen Hausmeisterservice suchen."' },
+        { name:'Philipp Gampe', role:'Gewerbekunde', initials:'PG', stars:[1,1,1,1,1], quote:'„Viele Fähigkeiten in einem vereint. Schnelles und ergebnisorientiertes Arbeiten. Termine auch kurzfristig vereinbar. Top Service."' },
+        { name:'Thomas Krüger', role:'Hauseigentümer', initials:'TK', stars:[1,1,1,1,1], quote:'„Beim Winterdienst war bereits am Morgen nach dem Schneefall alles sicher geräumt. Professionell, freundlich und fair im Preis – so stelle ich mir einen Hausmeisterservice vor."' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
