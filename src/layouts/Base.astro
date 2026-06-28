@@ -25,23 +25,23 @@ const {
       href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <style define:vars={{ bg }}>
+    <style is:global>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body {
         font-family: 'Manrope', system-ui, sans-serif;
         color: #0c2b40;
-        background: var(--bg);
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
       }
       a { text-decoration: none; color: inherit; }
+      a:hover { text-decoration: none; }
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
       }
     </style>
   </head>
-  <body>
+  <body style={`background:${bg};`}>
     <slot />
   </body>
 </html>
