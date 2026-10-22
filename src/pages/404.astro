@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import { contact } from '../data/site.js';
+import logo from '../assets/bilder/logo.png';
+const year = new Date().getFullYear();
+---
+
+<Base title="Seite nicht gefunden · Hausmeisterservice Rico Naumann" description="Diese Seite gibt es nicht. Zurück zur Startseite des Hausmeisterservice Rico Naumann." bg="#EEEEF0">
+  <div style="min-height:100vh; display:flex; flex-direction:column;">
+    <header style="background:#fff; box-shadow:0 4px 20px -14px rgba(12,43,64,.3);">
+      <div style="max-width:880px; margin:0 auto; padding:16px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <Image src={logo} height={108} loading="eager" alt="Logo Hausmeisterservice Rico Naumann" style="height:46px; width:auto;" />
+          <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#0C2B40; line-height:1.15;">Hausmeisterservice<br /><span style="font-weight:500; font-size:13px; color:#216CB4;">Rico Naumann</span></span>
+        </a>
+        <a href="/" style="font-weight:600; font-size:14px; color:#216CB4;">← Zur Startseite</a>
+      </div>
+    </header>
+
+    <main style="flex:1; max-width:880px; width:100%; margin:0 auto; padding:80px 28px; text-align:center;">
+      <p style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:#216CB4; margin-bottom:12px;">Fehler 404</p>
+      <h1 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(32px,5vw,46px); color:#0C2B40; letter-spacing:-.02em;">Seite nicht gefunden</h1>
+      <p style="margin-top:16px; font-size:17px; line-height:1.7; color:#3f5466; max-width:520px; margin-left:auto; margin-right:auto;">Die aufgerufene Adresse gibt es nicht oder sie wurde verschoben. Auf der Startseite finden Sie alle Leistungen und unsere Kontaktdaten.</p>
+      <div style="margin-top:32px; display:flex; flex-wrap:wrap; justify-content:center; gap:14px;">
+        <a href="/" style="display:inline-block; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px;">Zur Startseite</a>
+        <a href={contact.mobilHref} style="display:inline-block; border:1.5px solid #216CB4; color:#216CB4; font-family:'Sora',sans-serif; font-weight:600; font-size:15px; padding:13px 26px; border-radius:999px;">Anrufen: {contact.mobil}</a>
+      </div>
+    </main>
+
+    <footer style="background:#0C2B40; color:#9fb4c6;">
+      <div style="max-width:880px; margin:0 auto; padding:24px 28px; display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center;">
+        <p style="font-size:13px;">© {year} Hausmeisterservice Rico Naumann</p>
+        <div style="display:flex; gap:20px;">
+          <a href="/impressum/" style="font-size:13px; color:#9fd3ec;">Impressum</a>
+          <a href="/datenschutz/" style="font-size:13px; color:#9fd3ec;">Datenschutz</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</Base>
