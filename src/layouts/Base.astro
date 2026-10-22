@@ -1,35 +1,64 @@
 ---
-// Lokal gehostete Schriften (DSGVO-konform, kein Abruf von Google-Servern)
-import '@fontsource/sora/400.css';
-import '@fontsource/sora/500.css';
-import '@fontsource/sora/600.css';
-import '@fontsource/sora/700.css';
-import '@fontsource/sora/800.css';
-import '@fontsource/manrope/400.css';
-import '@fontsource/manrope/500.css';
-import '@fontsource/manrope/600.css';
-import '@fontsource/manrope/700.css';
+// Lokal gehostete Schriften (DSGVO-konform, kein Abruf von Google-Servern).
+// Nur das Latin-Subset und nur die Schnitte, die auf der Seite vorkommen.
+import '@fontsource/sora/latin-500.css';
+import '@fontsource/sora/latin-600.css';
+import '@fontsource/sora/latin-700.css';
+import '@fontsource/sora/latin-800.css';
+import '@fontsource/manrope/latin-400.css';
+import '@fontsource/manrope/latin-600.css';
+import '@fontsource/manrope/latin-700.css';
+// Die zwei Schriften, die oben im sichtbaren Bereich gebraucht werden, vorladen
+import soraBoldUrl from '@fontsource/sora/files/sora-latin-800-normal.woff2?url';
+import manropeUrl from '@fontsource/manrope/files/manrope-latin-400-normal.woff2?url';
 
 const {
   title = 'Hausmeisterservice Rico Naumann · Raum Chemnitz',
-  description = 'Zuverlässiger Hausmeisterservice für private und gewerbliche Immobilien im Raum Chemnitz: Reparaturen, Gartenpflege, Treppenhausreinigung, Winterdienst und mehr. Kompetent. Schnell. Persönlich.',
+  description = 'Hausmeisterservice im Raum Chemnitz und Lichtenau: Reparaturen, Gartenpflege, Treppenhausreinigung, Winterdienst für private und gewerbliche Immobilien.',
   bg = '#ffffff',
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/bilder/og-hausmeisterservice-naumann.jpg', Astro.site).href;
 ---
 
 <!DOCTYPE html>
 <html lang="de">
   <head>
+    <!-- Markiert, dass JavaScript läuft: nur dann werden .reveal-Elemente anfangs ausgeblendet -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="/bilder/logo.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#216CB4" />
+
+    <meta property="og:site_name" content="Hausmeisterservice Rico Naumann" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Hausmeisterservice Rico Naumann – Zuverlässiger Hausmeisterservice im Raum Chemnitz" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={soraBoldUrl} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={manropeUrl} />
+
+    <slot name="head" />
+
     <style is:global>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html { scroll-behavior: smooth; }
@@ -45,6 +74,7 @@ const {
         html { scroll-behavior: auto; }
       }
     </style>
+    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
   </head>
   <body style={`background:${bg};`}>
     <slot />
