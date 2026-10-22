@@ -16,6 +16,7 @@ const {
   title = 'Hausmeisterservice Rico Naumann · Raum Chemnitz',
   description = 'Hausmeisterservice im Raum Chemnitz und Lichtenau: Reparaturen, Gartenpflege, Treppenhausreinigung, Winterdienst für private und gewerbliche Immobilien.',
   bg = '#ffffff',
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -31,7 +32,7 @@ const ogImage = new URL('/bilder/og-hausmeisterservice-naumann.jpg', Astro.site)
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#216CB4" />
 
     <meta property="og:site_name" content="Hausmeisterservice Rico Naumann" />
