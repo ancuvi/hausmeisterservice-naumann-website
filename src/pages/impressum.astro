@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { contact } from '../data/site.js';
+import logo from '../assets/bilder/logo.png';
 const year = new Date().getFullYear();
 ---
 
@@ -9,7 +11,7 @@ const year = new Date().getFullYear();
     <header style="background:#fff; box-shadow:0 4px 20px -14px rgba(12,43,64,.3);">
       <div style="max-width:880px; margin:0 auto; padding:16px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
         <a href="/" style="display:flex; align-items:center; gap:12px;">
-          <img src="/bilder/logo.png" alt="Logo Hausmeisterservice Rico Naumann" style="height:46px;" />
+          <Image src={logo} height={108} loading="eager" alt="Logo Hausmeisterservice Rico Naumann" style="height:46px; width:auto;" />
           <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#0C2B40; line-height:1.15;">Hausmeisterservice<br /><span style="font-weight:500; font-size:13px; color:#1594CB;">Rico Naumann</span></span>
         </a>
         <a href="/" style="font-weight:600; font-size:14px; color:#216CB4;">← Zur Startseite</a>

@@ -1,6 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { services, milestones, testimonials, contact } from '../data/site.js';
+import logo from '../assets/bilder/logo.png';
+import hero from '../assets/bilder/hero-haus.webp';
+import ueberUns from '../assets/bilder/ueber-uns-fassade.webp';
+import einsatzgebiet from '../assets/bilder/einsatzgebiet.webp';
+import kontaktBild from '../assets/bilder/kontakt.webp';
 const year = new Date().getFullYear();
 ---
 
@@ -11,7 +17,7 @@ const year = new Date().getFullYear();
     <header id="hdr" class="hdr" style="position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 0;">
       <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
         <a href="#top" style="display:flex; align-items:center; gap:13px;">
-          <img class="hdr-logo" src="/bilder/logo.png" alt="Logo Hausmeisterservice Rico Naumann" style="height:54px; width:auto; transition:height .35s ease; filter:drop-shadow(0 3px 8px rgba(12,43,64,.25));" />
+          <Image class="hdr-logo" src={logo} height={108} loading="eager" alt="Logo Hausmeisterservice Rico Naumann" style="height:54px; width:auto; transition:height .35s ease; filter:drop-shadow(0 3px 8px rgba(12,43,64,.25));" />
           <span class="hdr-name" style="font-family:'Sora',sans-serif; font-weight:700; font-size:18px; line-height:1.1; color:#fff; text-shadow:0 1px 12px rgba(12,43,64,.45);">Hausmeisterservice<br /><span style="font-weight:500; font-size:14px; color:#1594CB;">Rico Naumann</span></span>
         </a>
         <nav class="hdr-nav" style="display:flex; align-items:center; gap:30px;">
@@ -41,7 +47,7 @@ const year = new Date().getFullYear();
     <!-- ===== HERO ===== -->
     <section id="top" style="position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden;">
       <div style="position:absolute; inset:0; overflow:hidden;">
-        <img class="kb" src="/bilder/hero-haus.webp" alt="Einfamilienhaus mit Firmen-Transporter von Hausmeisterservice Rico Naumann" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 38%; animation:kb 22s ease-in-out infinite alternate;" />
+        <Image class="kb" src={hero} widths={[640, 960, 1200]} sizes="100vw" quality={70} loading="eager" fetchpriority="high" decoding="sync" alt="Einfamilienhaus mit Firmen-Transporter von Hausmeisterservice Rico Naumann" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 38%; animation:kb 22s ease-in-out infinite alternate;" />
       </div>
       <div style="position:absolute; inset:0; background:linear-gradient(105deg, rgba(12,43,64,.92) 0%, rgba(20,70,120,.78) 38%, rgba(12,43,64,.30) 72%, rgba(12,43,64,.12) 100%);"></div>
       <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(12,43,64,.55), transparent 40%);"></div>
@@ -49,7 +55,7 @@ const year = new Date().getFullYear();
       <div style="position:relative; z-index:2; max-width:1200px; width:100%; margin:0 auto; padding:130px 28px 90px;">
         <div style="max-width:680px;">
           <div class="reveal" style="display:inline-flex; align-items:center; gap:10px; background:rgba(21,148,203,.18); border:1px solid rgba(225,243,255,.35); backdrop-filter:blur(6px); padding:8px 16px 8px 10px; border-radius:999px; margin-bottom:26px;">
-            <img src="/bilder/logo.png" alt="" style="height:30px; width:auto;" />
+            <Image src={logo} height={108} loading="eager" alt="" style="height:30px; width:auto;" />
             <span style="font-family:'Sora',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:.14em; color:#E1F3FF; text-transform:uppercase;">Est. 2025 · Raum Chemnitz</span>
           </div>
           <h1 class="reveal hero-h1" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(29px,7vw,68px); line-height:1.04; color:#fff; letter-spacing:-.02em; text-shadow:0 4px 30px rgba(12,43,64,.4);">Zuverlässiger<br />Hausmeisterservice<br /><span style="background:linear-gradient(120deg,#E1F3FF,#1594CB); -webkit-background-clip:text; background-clip:text; color:transparent;">für Ihr Objekt</span></h1>
@@ -101,7 +107,7 @@ const year = new Date().getFullYear();
           {services.map((s) => (
             <div class="svc reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 18px 40px -28px rgba(0,0,0,.5);">
               <div style="position:relative; height:188px; overflow:hidden;">
-                <img class="grow" src={s.img} alt={s.alt} style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <Image class="grow" src={s.img} width={800} widths={[400, 600, 800]} sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 380px" alt={s.alt} style="width:100%; height:100%; object-fit:cover; display:block;" />
                 <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(12,43,64,.35), transparent 55%);"></div>
                 <span style="position:absolute; top:14px; left:14px; background:rgba(255,255,255,.92); color:#216CB4; font-family:'Sora',sans-serif; font-weight:700; font-size:13px; width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;">{s.no}</span>
               </div>
@@ -122,9 +128,9 @@ const year = new Date().getFullYear();
         <div class="reveal" style="position:relative;">
           <div style="position:absolute; top:-22px; left:-22px; width:120px; height:120px; border-radius:24px; background:#E1F3FF; z-index:0;"></div>
           <div style="position:absolute; bottom:-22px; right:-22px; width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#216CB4,#1594CB); opacity:.18; z-index:0;"></div>
-          <img src="/bilder/ueber-uns-fassade.webp" alt="Moderne weiße Hausfassade mit Eingangstür" style="position:relative; z-index:1; width:100%; border-radius:22px; box-shadow:0 30px 60px -30px rgba(12,43,64,.5); display:block;" />
+          <Image src={ueberUns} width={1200} widths={[600, 900, 1200]} sizes="(max-width: 760px) 100vw, 560px" alt="Moderne weiße Hausfassade mit Eingangstür" style="position:relative; z-index:1; width:100%; border-radius:22px; box-shadow:0 30px 60px -30px rgba(12,43,64,.5); display:block;" />
           <div style="position:absolute; z-index:2; bottom:24px; left:24px; background:rgba(255,255,255,.95); backdrop-filter:blur(8px); border-radius:16px; padding:16px 20px; box-shadow:0 16px 30px -16px rgba(12,43,64,.4); display:flex; align-items:center; gap:13px;">
-            <img src="/bilder/logo.png" alt="" style="height:42px;" />
+            <Image src={logo} height={108} alt="" style="height:42px; width:auto;" />
             <div>
               <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#0C2B40; line-height:1.1;">Rico Naumann</p>
               <p style="font-size:12.5px; color:#1594CB; font-weight:600;">Ihr Ansprechpartner</p>
@@ -163,7 +169,7 @@ const year = new Date().getFullYear();
           </div>
         </div>
         <div class="reveal" style="position:relative;">
-          <img src="/bilder/einsatzgebiet.webp" alt="Einsatzgebiet Chemnitz und Umgebung" style="width:100%; border-radius:22px; box-shadow:0 30px 60px -30px rgba(12,43,64,.45); display:block;" />
+          <Image src={einsatzgebiet} width={1200} widths={[600, 900, 1200]} sizes="(max-width: 760px) 100vw, 560px" alt="Einsatzgebiet Chemnitz und Umgebung" style="width:100%; border-radius:22px; box-shadow:0 30px 60px -30px rgba(12,43,64,.45); display:block;" />
           <div style="position:absolute; bottom:20px; left:20px; right:20px; background:rgba(12,43,64,.88); backdrop-filter:blur(8px); border-radius:16px; padding:16px 20px; display:flex; align-items:center; gap:13px;">
             <span class="spinslow" style="flex:none; width:12px; height:12px; border-radius:50%; background:#1594CB; box-shadow:0 0 0 5px rgba(21,148,203,.25);"></span>
             <p style="color:#E1F3FF; font-size:14px; line-height:1.4;"><strong style="color:#fff;">Standort Lichtenau</strong> · Untere Hauptstraße 93 · zentral im Raum Chemnitz</p>
@@ -236,7 +242,7 @@ const year = new Date().getFullYear();
     <!-- ===== KONTAKT ===== -->
     <section id="kontakt" style="position:relative; overflow:hidden;">
       <div style="position:absolute; inset:0;">
-        <img src="/bilder/kontakt.webp" alt="Mitarbeiter vor Wohnanlage mit Firmen-Transporter" style="width:100%; height:100%; object-fit:cover; object-position:center;" />
+        <Image src={kontaktBild} width={1536} widths={[800, 1200, 1536]} sizes="100vw" quality={70} alt="Mitarbeiter vor Wohnanlage mit Firmen-Transporter" style="width:100%; height:100%; object-fit:cover; object-position:center;" />
       </div>
       <div style="position:absolute; inset:0; background:linear-gradient(115deg, rgba(12,43,64,.96) 0%, rgba(20,58,92,.9) 46%, rgba(12,43,64,.55) 100%);"></div>
       <div style="position:relative; z-index:2; max-width:1080px; margin:0 auto; padding:106px 28px; text-align:center;">
@@ -290,7 +296,7 @@ const year = new Date().getFullYear();
       <div style="max-width:1200px; margin:0 auto; padding:70px 28px 30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:44px;">
         <div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
-            <img src="/bilder/logo.png" alt="Logo" style="height:52px;" />
+            <Image src={logo} height={108} alt="Logo Hausmeisterservice Rico Naumann" style="height:52px; width:auto;" />
             <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#fff; line-height:1.15;">Hausmeisterservice<br /><span style="font-weight:500; font-size:13px; color:#1594CB;">Rico Naumann</span></span>
           </div>
           <p style="font-size:14px; line-height:1.7;">Untere Hauptstraße 93<br />09244 Lichtenau (Sachsen)</p>

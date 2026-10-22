@@ -1,3 +1,10 @@
+import imgHausmeister from '../assets/bilder/leistung-hausmeister.webp';
+import imgReparatur from '../assets/bilder/leistung-reparatur.webp';
+import imgGarten from '../assets/bilder/leistung-garten.webp';
+import imgWinterdienst from '../assets/bilder/leistung-winterdienst.webp';
+import imgTreppenhaus from '../assets/bilder/leistung-treppenhaus.webp';
+import imgMuelltonne from '../assets/bilder/leistung-muelltonne.webp';
+
 // Zentrale Inhalte der Website. Hier können Texte, Leistungen, Meilensteine
 // und Kundenstimmen gepflegt werden, ohne das Layout anzufassen.
 
@@ -17,12 +24,12 @@ export const contact = {
 };
 
 export const services = [
-  { no: '01', img: '/bilder/leistung-hausmeister.webp', alt: 'Modernes Mehrfamilienhaus', title: 'Hausmeisterservice', text: 'Unser Rundum-sorglos-Paket: Wir übernehmen alle anfallenden Tätigkeiten rund um Ihre Immobilie – von kleinen Reparaturen bis zur regelmäßigen Objektkontrolle. So sparen Sie Zeit und erhalten stets einen gepflegten Außen- und Innenbereich.' },
-  { no: '02', img: '/bilder/leistung-reparatur.webp', alt: 'Handwerker an Deckenplatte', title: 'Reparaturservice', text: 'Ob tropfender Wasserhahn, defekter Lichtschalter oder beschädigte Tür – unser geschultes Team führt rasch und zuverlässig alle kleineren Instandsetzungsarbeiten durch, damit technische Mängel gar nicht erst zum größeren Problem werden.' },
-  { no: '03', img: '/bilder/leistung-garten.webp', alt: 'Gepflegter Garten mit Rasen', title: 'Gartenpflege', text: 'Wir bringen Ihren Außenbereich zum Blühen: von Rasenmähen und Unkrautentfernung über Strauch- und Heckenschnitt bis hin zur saisonalen Bepflanzung sorgen wir dafür, dass Ihr Garten jederzeit gepflegt und einladend aussieht.' },
-  { no: '04', img: '/bilder/leistung-winterdienst.webp', alt: 'Schneeschaufel im Schnee', title: 'Winterdienst', text: 'Schnee und Eis? Nicht mit uns! Ab dem ersten Frost räumen und streuen wir Ihre Wege, Zufahrten und Parkplätze fachgerecht. So gewährleisten wir jederzeit sichere Zugänge und reduzieren das Unfallrisiko.' },
-  { no: '05', img: '/bilder/leistung-treppenhaus.webp', alt: 'Sauberes Treppenhaus', title: 'Treppenhausreinigung', text: 'Das Treppenhaus ist die Visitenkarte jeder Immobilie. Mit unserer regelmäßigen Reinigung entfernen wir Staub, Schmutz und Verunreinigungen aus allen Bereichen – inkl. Geländer, Fensterbänke und Fliesen.' },
-  { no: '06', img: '/bilder/leistung-muelltonne.webp', alt: 'Person mit Mülltonne', title: 'Mülltonnen-Service', text: 'Nie wieder vergessene Abholung: Wir stellen Ihre Tonnen termingerecht an die Straße und holen sie nach der Leerung wieder zurück. Auf Wunsch reinigen und desinfizieren wir die Behälter, damit unangenehme Gerüche gar nicht erst entstehen.' },
+  { no: '01', img: imgHausmeister, alt: 'Modernes Mehrfamilienhaus', title: 'Hausmeisterservice', text: 'Unser Rundum-sorglos-Paket: Wir übernehmen alle anfallenden Tätigkeiten rund um Ihre Immobilie – von kleinen Reparaturen bis zur regelmäßigen Objektkontrolle. So sparen Sie Zeit und erhalten stets einen gepflegten Außen- und Innenbereich.' },
+  { no: '02', img: imgReparatur, alt: 'Handwerker an Deckenplatte', title: 'Reparaturservice', text: 'Ob tropfender Wasserhahn, defekter Lichtschalter oder beschädigte Tür – unser geschultes Team führt rasch und zuverlässig alle kleineren Instandsetzungsarbeiten durch, damit technische Mängel gar nicht erst zum größeren Problem werden.' },
+  { no: '03', img: imgGarten, alt: 'Gepflegter Garten mit Rasen', title: 'Gartenpflege', text: 'Wir bringen Ihren Außenbereich zum Blühen: von Rasenmähen und Unkrautentfernung über Strauch- und Heckenschnitt bis hin zur saisonalen Bepflanzung sorgen wir dafür, dass Ihr Garten jederzeit gepflegt und einladend aussieht.' },
+  { no: '04', img: imgWinterdienst, alt: 'Schneeschaufel im Schnee', title: 'Winterdienst', text: 'Schnee und Eis? Nicht mit uns! Ab dem ersten Frost räumen und streuen wir Ihre Wege, Zufahrten und Parkplätze fachgerecht. So gewährleisten wir jederzeit sichere Zugänge und reduzieren das Unfallrisiko.' },
+  { no: '05', img: imgTreppenhaus, alt: 'Sauberes Treppenhaus', title: 'Treppenhausreinigung', text: 'Das Treppenhaus ist die Visitenkarte jeder Immobilie. Mit unserer regelmäßigen Reinigung entfernen wir Staub, Schmutz und Verunreinigungen aus allen Bereichen – inkl. Geländer, Fensterbänke und Fliesen.' },
+  { no: '06', img: imgMuelltonne, alt: 'Person mit Mülltonne', title: 'Mülltonnen-Service', text: 'Nie wieder vergessene Abholung: Wir stellen Ihre Tonnen termingerecht an die Straße und holen sie nach der Leerung wieder zurück. Auf Wunsch reinigen und desinfizieren wir die Behälter, damit unangenehme Gerüche gar nicht erst entstehen.' },
 ];
 
 export const milestones = [
