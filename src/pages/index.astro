@@ -8,9 +8,48 @@ import ueberUns from '../assets/bilder/ueber-uns-fassade.webp';
 import einsatzgebiet from '../assets/bilder/einsatzgebiet.webp';
 import kontaktBild from '../assets/bilder/kontakt.webp';
 const year = new Date().getFullYear();
+
+// Strukturierte Daten (schema.org LocalBusiness). Nur Angaben, die auf der
+// Seite stehen oder belegbar sind: keine Öffnungszeiten (stehen nirgends),
+// Koordinaten der Anschrift aus OpenStreetMap (Gebäude Untere Hauptstraße 93).
+const site = Astro.site.href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${site}#business`,
+  name: contact.firma,
+  url: site,
+  image: `${site}bilder/og-hausmeisterservice-naumann.jpg`,
+  logo: `${site}icons/icon-512.png`,
+  telephone: '+4937206891317',
+  email: contact.email,
+  founder: { '@type': 'Person', name: contact.inhaber },
+  foundingDate: '2025',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.strasse,
+    postalCode: '09244',
+    addressLocality: 'Lichtenau',
+    addressRegion: 'Sachsen',
+    addressCountry: 'DE',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.908291, longitude: 12.99906 },
+  areaServed: ['Chemnitz', 'Lichtenau', 'Niederlichtenau', 'Landkreis Mittelsachsen'].map((name) => ({ '@type': 'Place', name })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Leistungen',
+    itemListElement: services.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.title, description: s.text, areaServed: 'Chemnitz und Umgebung' },
+    })),
+  },
+};
 ---
 
 <Base>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </Fragment>
   <div style="position:relative; width:100%;">
 
     <!-- ===== HEADER ===== -->
@@ -18,7 +57,7 @@ const year = new Date().getFullYear();
       <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
         <a href="#top" style="display:flex; align-items:center; gap:13px;">
           <Image class="hdr-logo" src={logo} height={108} loading="eager" alt="Logo Hausmeisterservice Rico Naumann" style="height:54px; width:auto; transition:height .35s ease; filter:drop-shadow(0 3px 8px rgba(12,43,64,.25));" />
-          <span class="hdr-name" style="font-family:'Sora',sans-serif; font-weight:700; font-size:18px; line-height:1.1; color:#fff; text-shadow:0 1px 12px rgba(12,43,64,.45);">Hausmeisterservice<br /><span style="font-weight:500; font-size:14px; color:#1594CB;">Rico Naumann</span></span>
+          <span class="hdr-name" style="font-family:'Sora',sans-serif; font-weight:700; font-size:18px; line-height:1.1; color:#fff; text-shadow:0 1px 12px rgba(12,43,64,.45);">Hausmeisterservice<br /><span class="hdr-sub" style="font-weight:500; font-size:14px; color:#9fd3ec;">Rico Naumann</span></span>
         </a>
         <nav class="hdr-nav" style="display:flex; align-items:center; gap:30px;">
           <a class="navlink" href="#leistungen" style="font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 10px rgba(12,43,64,.4);">Leistungen</a>
@@ -27,7 +66,7 @@ const year = new Date().getFullYear();
           <a class="navlink" href="#erfahrung" style="font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 10px rgba(12,43,64,.4);">Erfahrung</a>
         </nav>
         <a class="hdr-cta btn-primary" href="#kontakt" style="background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; box-shadow:0 8px 22px -8px rgba(33,108,180,.6);">Kontakt</a>
-        <button id="burger" class="burger" aria-label="Menü" aria-expanded="false" style="display:none; flex-direction:column; gap:5px; background:transparent; border:none; cursor:pointer; padding:6px;">
+        <button id="burger" class="burger" aria-label="Menü" aria-expanded="false" aria-controls="mobnav" style="display:none; flex-direction:column; gap:5px; background:transparent; border:none; cursor:pointer; padding:6px;">
           <span style="display:block; width:26px; height:2.5px; background:#fff; border-radius:2px;"></span>
           <span style="display:block; width:26px; height:2.5px; background:#fff; border-radius:2px;"></span>
           <span style="display:block; width:26px; height:2.5px; background:#fff; border-radius:2px;"></span>
@@ -44,6 +83,7 @@ const year = new Date().getFullYear();
       </div>
     </header>
 
+    <main>
     <!-- ===== HERO ===== -->
     <section id="top" style="position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden;">
       <div style="position:absolute; inset:0; overflow:hidden;">
@@ -54,14 +94,14 @@ const year = new Date().getFullYear();
 
       <div style="position:relative; z-index:2; max-width:1200px; width:100%; margin:0 auto; padding:130px 28px 90px;">
         <div style="max-width:680px;">
-          <div class="reveal" style="display:inline-flex; align-items:center; gap:10px; background:rgba(21,148,203,.18); border:1px solid rgba(225,243,255,.35); backdrop-filter:blur(6px); padding:8px 16px 8px 10px; border-radius:999px; margin-bottom:26px;">
+          <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(21,148,203,.18); border:1px solid rgba(225,243,255,.35); backdrop-filter:blur(6px); padding:8px 16px 8px 10px; border-radius:999px; margin-bottom:26px;">
             <Image src={logo} height={108} loading="eager" alt="" style="height:30px; width:auto;" />
             <span style="font-family:'Sora',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:.14em; color:#E1F3FF; text-transform:uppercase;">Est. 2025 · Raum Chemnitz</span>
           </div>
-          <h1 class="reveal hero-h1" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(29px,7vw,68px); line-height:1.04; color:#fff; letter-spacing:-.02em; text-shadow:0 4px 30px rgba(12,43,64,.4);">Zuverlässiger<br />Hausmeisterservice<br /><span style="background:linear-gradient(120deg,#E1F3FF,#1594CB); -webkit-background-clip:text; background-clip:text; color:transparent;">für Ihr Objekt</span></h1>
-          <p class="reveal" style="margin-top:24px; font-family:'Sora',sans-serif; font-weight:600; font-size:clamp(18px,2.4vw,24px); color:#E1F3FF; letter-spacing:.01em;">Kompetent. <span style="color:#fff;">Schnell.</span> Persönlich.</p>
-          <p class="reveal" style="margin-top:16px; font-size:17px; line-height:1.6; color:rgba(225,243,255,.85); max-width:520px;">Rundum-sorglos-Betreuung für private und gewerbliche Immobilien – mit festem persönlichem Ansprechpartner und transparenten Preisen.</p>
-          <div class="reveal" style="margin-top:38px; display:flex; flex-wrap:wrap; align-items:center; gap:18px;">
+          <h1 class="hero-h1" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(29px,7vw,68px); line-height:1.04; color:#fff; letter-spacing:-.02em; text-shadow:0 4px 30px rgba(12,43,64,.4);">Zuverlässiger<br />Hausmeisterservice<br /><span style="background:linear-gradient(120deg,#E1F3FF,#1594CB); -webkit-background-clip:text; background-clip:text; color:transparent;">im Raum Chemnitz</span></h1>
+          <p style="margin-top:24px; font-family:'Sora',sans-serif; font-weight:600; font-size:clamp(18px,2.4vw,24px); color:#E1F3FF; letter-spacing:.01em;">Kompetent. <span style="color:#fff;">Schnell.</span> Persönlich.</p>
+          <p style="margin-top:16px; font-size:17px; line-height:1.6; color:rgba(225,243,255,.85); max-width:520px;">Rundum-sorglos-Betreuung für private und gewerbliche Immobilien – mit festem persönlichem Ansprechpartner und transparenten Preisen.</p>
+          <div style="margin-top:38px; display:flex; flex-wrap:wrap; align-items:center; gap:18px;">
             <a class="btn-primary pulsecta" href="#kontakt" style="background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px 34px; border-radius:999px; animation:pulse 3.2s ease-in-out infinite;">Kostenlose Beratung vereinbaren</a>
             <a class="btn-ghost" href="#leistungen" style="border:1.5px solid rgba(225,243,255,.6); color:#fff; font-family:'Sora',sans-serif; font-weight:600; font-size:15px; padding:16px 28px; border-radius:999px;">Unsere Leistungen</a>
           </div>
@@ -99,7 +139,7 @@ const year = new Date().getFullYear();
     <section id="leistungen" style="position:relative; background:linear-gradient(165deg,#0C2B40 0%,#143a5c 55%,#216CB4 130%); padding:104px 0 110px;">
       <div style="max-width:1200px; margin:0 auto; padding:0 28px;">
         <div style="max-width:640px; margin-bottom:54px;">
-          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Was wir für Sie tun</p>
+          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#9fd3ec; margin-bottom:14px;">Was wir für Sie tun</p>
           <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#fff; line-height:1.08; letter-spacing:-.02em;">Leistungen</h2>
           <p class="reveal" style="margin-top:18px; font-size:17px; line-height:1.6; color:rgba(225,243,255,.8);">Alles rund um Ihre Immobilie – sauber, sicher und werterhaltend. Sechs Kernleistungen, die wir flexibel an Ihren Bedarf anpassen.</p>
         </div>
@@ -133,19 +173,19 @@ const year = new Date().getFullYear();
             <Image src={logo} height={108} alt="" style="height:42px; width:auto;" />
             <div>
               <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#0C2B40; line-height:1.1;">Rico Naumann</p>
-              <p style="font-size:12.5px; color:#1594CB; font-weight:600;">Ihr Ansprechpartner</p>
+              <p style="font-size:12.5px; color:#216CB4; font-weight:600;">Ihr Ansprechpartner</p>
             </div>
           </div>
         </div>
         <div>
-          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Wer wir sind</p>
+          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#216CB4; margin-bottom:14px;">Wer wir sind</p>
           <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#0C2B40; line-height:1.08; letter-spacing:-.02em;">Über uns</h2>
           <p class="reveal" style="margin-top:22px; font-size:17px; line-height:1.72; color:#3f5466;">Wir sind ein regionaler Hausmeisterservice mit über zehn Jahren Erfahrung in der ganzheitlichen Objektbetreuung. Private Hauseigentümer, WEG-Verwalter und Gewerbekunden schätzen unsere All-in-One-Leistungen: von regelmäßigen Objektkontrollen über Gartenpflege bis hin zu kleinen Reparaturen und Glühbirnenwechseln.</p>
           <p class="reveal" style="margin-top:16px; font-size:17px; line-height:1.72; color:#3f5466;">Dabei legen wir großen Wert auf transparente Preise ohne versteckte Kosten. Mit einem festen persönlichen Ansprechpartner garantieren wir kurze Kommunikationswege und individuellen Service.</p>
           <div class="reveal" style="margin-top:30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px;">
             {['Transparente Preise', 'Kurze Wege', 'All-in-One Service', 'Privat & Gewerbe'].map((f) => (
               <div style="display:flex; align-items:center; gap:12px; background:#F4F9FE; border:1px solid #E1F3FF; border-radius:14px; padding:14px 16px;">
-                <span style="flex:none; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">✓</span>
+                <span style="flex:none; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;" aria-hidden="true">✓</span>
                 <span style="font-weight:600; font-size:14.5px; color:#0C2B40;">{f}</span>
               </div>
             ))}
@@ -158,9 +198,9 @@ const year = new Date().getFullYear();
     <section id="einsatzgebiet" style="position:relative; background:#EEEEF0; padding:104px 0; overflow:hidden;">
       <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:56px; align-items:center;">
         <div>
-          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Wo wir für Sie da sind</p>
+          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#216CB4; margin-bottom:14px;">Wo wir für Sie da sind</p>
           <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#0C2B40; line-height:1.08; letter-spacing:-.02em;">Unser Einsatzgebiet</h2>
-          <p class="reveal" style="margin-top:22px; font-size:17px; line-height:1.72; color:#3f5466;">Unser Einsatzgebiet umfasst das Stadtgebiet Chemnitz und Umgebung. Wir bieten privaten und gewerblichen Kunden einen umfassenden Hausmeisterservice: Reparaturen, Gartenpflege, Treppenhausreinigung, Winterdienst und Kleintransporte.</p>
+          <p class="reveal" style="margin-top:22px; font-size:17px; line-height:1.72; color:#3f5466;">Unser Einsatzgebiet umfasst das Stadtgebiet Chemnitz sowie Lichtenau und die Umgebung im Landkreis Mittelsachsen. Wir bieten privaten und gewerblichen Kunden einen umfassenden Hausmeisterservice: Reparaturen, Gartenpflege, Treppenhausreinigung, Winterdienst und Kleintransporte.</p>
           <p class="reveal" style="margin-top:16px; font-size:17px; line-height:1.72; color:#3f5466;">Mit flexiblen Servicezeiten stehen wir Ihnen persönlich zur Seite. Verlassen Sie sich auf unser erfahrenes Team, das zuverlässig für Ordnung, Sicherheit und Werterhalt sorgt – ob Wohnhaus, Bürogebäude oder Gewerbefläche.</p>
           <div class="reveal" style="margin-top:28px; display:flex; flex-wrap:wrap; gap:10px;">
             {['Chemnitz', 'Lichtenau', 'Niederlichtenau', '+ Umgebung'].map((o) => (
@@ -182,7 +222,7 @@ const year = new Date().getFullYear();
     <section id="erfahrung" style="background:linear-gradient(180deg,#E1F3FF,#f4fbff); padding:104px 0;">
       <div style="max-width:1200px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:56px;">
         <div>
-          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Unser Weg</p>
+          <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#216CB4; margin-bottom:14px;">Unser Weg</p>
           <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.4vw,46px); color:#0C2B40; line-height:1.08; letter-spacing:-.02em;">Erfahrung &amp;<br />Leistungen</h2>
           <p class="reveal" style="margin-top:20px; font-size:17px; line-height:1.7; color:#3f5466; max-width:380px;">Von der Gründung bis zum heutigen Vollservice – wir entwickeln uns stetig weiter, damit Ihre Immobilie in den besten Händen ist.</p>
         </div>
@@ -192,7 +232,7 @@ const year = new Date().getFullYear();
             <div class="reveal" style="position:relative; margin-bottom:34px;">
               <span style="position:absolute; left:-34px; top:4px; width:16px; height:16px; border-radius:50%; background:#fff; border:3px solid #1594CB; box-shadow:0 0 0 5px rgba(21,148,203,.14);"></span>
               <div style="background:#fff; border-radius:18px; padding:24px 26px; box-shadow:0 16px 36px -26px rgba(12,43,64,.45);">
-                <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#1594CB;">{m.tag}</span>
+                <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#216CB4;">{m.tag}</span>
                 <h3 style="font-family:'Sora',sans-serif; font-weight:700; font-size:19px; color:#0C2B40; margin:8px 0 14px; line-height:1.25;">{m.title}</h3>
                 <ul style="list-style:none; display:flex; flex-direction:column; gap:9px;">
                   {m.points.map((p) => (
@@ -222,7 +262,7 @@ const year = new Date().getFullYear();
             <div class="reveal" style="background:#fff; border-radius:22px; padding:32px 30px; box-shadow:0 24px 50px -30px rgba(0,0,0,.6);">
               <div style="display:flex; gap:3px; margin-bottom:16px;">
                 {Array.from({ length: t.stars }).map(() => (
-                  <span style="color:#1594CB; font-size:18px;">★</span>
+                  <span style="color:#1594CB; font-size:18px;" aria-hidden="true">★</span>
                 ))}
               </div>
               <p style="font-size:15.5px; line-height:1.7; color:#3f5466;">{t.quote}</p>
@@ -230,7 +270,7 @@ const year = new Date().getFullYear();
                 <span style="flex:none; width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#216CB4,#1594CB); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:700; font-size:17px;">{t.initials}</span>
                 <div>
                   <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; color:#0C2B40;">{t.name}</p>
-                  <p style="font-size:13px; color:#1594CB; font-weight:600;">{t.role}</p>
+                  <p style="font-size:13px; color:#216CB4; font-weight:600;">{t.role}</p>
                 </div>
               </div>
             </div>
@@ -246,50 +286,51 @@ const year = new Date().getFullYear();
       </div>
       <div style="position:absolute; inset:0; background:linear-gradient(115deg, rgba(12,43,64,.96) 0%, rgba(20,58,92,.9) 46%, rgba(12,43,64,.55) 100%);"></div>
       <div style="position:relative; z-index:2; max-width:1080px; margin:0 auto; padding:106px 28px; text-align:center;">
-        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#1594CB; margin-bottom:14px;">Kontakt</p>
+        <p class="reveal" style="font-family:'Sora',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#9fd3ec; margin-bottom:14px;">Kontakt</p>
         <h2 class="reveal" style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,48px); color:#fff; line-height:1.06; letter-spacing:-.02em;">Lassen Sie uns sprechen</h2>
         <p class="reveal" style="margin:20px auto 0; font-size:17px; line-height:1.7; color:rgba(225,243,255,.85); max-width:560px;">Ob Frage, unverbindliches Angebot oder kurzfristiger Einsatz – melden Sie sich direkt bei uns. Ein Anruf genügt, wir kümmern uns persönlich.</p>
 
         <div class="reveal" style="margin-top:46px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; text-align:left;">
           <a class="ccard" href={contact.mobilHref} style="background:linear-gradient(150deg,#216CB4,#1594CB); border-radius:22px; padding:30px 28px; color:#fff; box-shadow:0 24px 50px -26px rgba(0,0,0,.6); display:flex; flex-direction:column; gap:18px;">
             <span style="display:flex; align-items:center; justify-content:space-between;">
-              <span style="width:50px; height:50px; border-radius:14px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:23px;">📱</span>
+              <span style="width:50px; height:50px; border-radius:14px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:23px;" aria-hidden="true">📱</span>
               <span style="font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:rgba(255,255,255,.22); padding:5px 11px; border-radius:999px;">Am schnellsten</span>
             </span>
             <span>
               <span style="display:block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:rgba(225,243,255,.85);">Mobil</span>
               <span style="display:block; margin-top:3px; font-family:'Sora',sans-serif; font-weight:700; font-size:23px;">{contact.mobil}</span>
             </span>
-            <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#E1F3FF;">Jetzt anrufen <span class="arr">→</span></span>
+            <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#E1F3FF;">Jetzt anrufen <span class="arr" aria-hidden="true">→</span></span>
           </a>
 
           <a class="ccard" href={contact.telefonHref} style="background:rgba(255,255,255,.07); border:1px solid rgba(225,243,255,.18); backdrop-filter:blur(8px); border-radius:22px; padding:30px 28px; color:#fff; display:flex; flex-direction:column; gap:18px;">
-            <span style="width:50px; height:50px; border-radius:14px; background:rgba(21,148,203,.28); border:1px solid rgba(225,243,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px;">☎</span>
+            <span style="width:50px; height:50px; border-radius:14px; background:rgba(21,148,203,.28); border:1px solid rgba(225,243,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px;" aria-hidden="true">☎</span>
             <span>
               <span style="display:block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:#9fd3ec;">Festnetz</span>
               <span style="display:block; margin-top:3px; font-family:'Sora',sans-serif; font-weight:700; font-size:23px;">{contact.telefon}</span>
             </span>
-            <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#9fd3ec;">Anrufen <span class="arr">→</span></span>
+            <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#9fd3ec;">Anrufen <span class="arr" aria-hidden="true">→</span></span>
           </a>
 
           <a class="ccard" href={contact.emailHref} style="background:rgba(255,255,255,.07); border:1px solid rgba(225,243,255,.18); backdrop-filter:blur(8px); border-radius:22px; padding:30px 28px; color:#fff; display:flex; flex-direction:column; gap:18px;">
-            <span style="width:50px; height:50px; border-radius:14px; background:rgba(21,148,203,.28); border:1px solid rgba(225,243,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px;">✉</span>
+            <span style="width:50px; height:50px; border-radius:14px; background:rgba(21,148,203,.28); border:1px solid rgba(225,243,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px;" aria-hidden="true">✉</span>
             <span>
               <span style="display:block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:#9fd3ec;">E-Mail</span>
               <span style="display:block; margin-top:3px; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; word-break:break-all;">{contact.email}</span>
             </span>
-            <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#9fd3ec;">Schreiben <span class="arr">→</span></span>
+            <span style="display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:#9fd3ec;">Schreiben <span class="arr" aria-hidden="true">→</span></span>
           </a>
         </div>
 
         <div class="reveal" style="margin-top:30px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
-          <span style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.08); border:1px solid rgba(225,243,255,.18); border-radius:999px; padding:10px 18px; font-size:14px; color:#E1F3FF;">📍 Untere Hauptstraße 93, 09244 Lichtenau</span>
-          <span style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.08); border:1px solid rgba(225,243,255,.18); border-radius:999px; padding:10px 18px; font-size:14px; color:#E1F3FF;">⏱ Antwort i. d. R. binnen 1 Werktag</span>
+          <span style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.08); border:1px solid rgba(225,243,255,.18); border-radius:999px; padding:10px 18px; font-size:14px; color:#E1F3FF;"><span aria-hidden="true">📍</span> Untere Hauptstraße 93, 09244 Lichtenau</span>
+          <span style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.08); border:1px solid rgba(225,243,255,.18); border-radius:999px; padding:10px 18px; font-size:14px; color:#E1F3FF;"><span aria-hidden="true">⏱</span> Antwort i. d. R. binnen 1 Werktag</span>
         </div>
 
-        <a href="#top" class="btn-ghost" style="margin-top:36px; display:inline-flex; align-items:center; gap:9px; border:1.5px solid rgba(225,243,255,.55); color:#fff; font-family:'Sora',sans-serif; font-weight:600; font-size:14px; padding:13px 26px; border-radius:999px;">↑ Zurück zum Start</a>
+        <a href="#top" class="btn-ghost" style="margin-top:36px; display:inline-flex; align-items:center; gap:9px; border:1.5px solid rgba(225,243,255,.55); color:#fff; font-family:'Sora',sans-serif; font-weight:600; font-size:14px; padding:13px 26px; border-radius:999px;"><span aria-hidden="true">↑</span> Zurück zum Start</a>
       </div>
     </section>
+    </main>
 
     <!-- ===== FOOTER ===== -->
     <footer style="background:#0C2B40; color:#cfe0ee;">
@@ -297,11 +338,11 @@ const year = new Date().getFullYear();
         <div>
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
             <Image src={logo} height={108} alt="Logo Hausmeisterservice Rico Naumann" style="height:52px; width:auto;" />
-            <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#fff; line-height:1.15;">Hausmeisterservice<br /><span style="font-weight:500; font-size:13px; color:#1594CB;">Rico Naumann</span></span>
+            <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#fff; line-height:1.15;">Hausmeisterservice<br /><span style="font-weight:500; font-size:13px; color:#9fd3ec;">Rico Naumann</span></span>
           </div>
           <p style="font-size:14px; line-height:1.7;">Untere Hauptstraße 93<br />09244 Lichtenau (Sachsen)</p>
           <a class="mlink" href={contact.emailHref} style="display:inline-block; margin-top:10px; font-size:14px; color:#9fd3ec;">{contact.email}</a>
-          <p style="margin-top:14px; font-family:'Sora',sans-serif; font-weight:600; font-size:13px; color:#1594CB; letter-spacing:.06em;">Kompetent. Schnell. Persönlich.</p>
+          <p style="margin-top:14px; font-family:'Sora',sans-serif; font-weight:600; font-size:13px; color:#9fd3ec; letter-spacing:.06em;">Kompetent. Schnell. Persönlich.</p>
         </div>
         <div>
           <p style="font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:#fff; letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px;">Hausmeisterdienst</p>
@@ -322,8 +363,8 @@ const year = new Date().getFullYear();
             <li><a class="mlink" href="/datenschutz/" style="font-size:14.5px;">Datenschutz</a></li>
           </ul>
           <div style="margin-top:22px; display:flex; flex-direction:column; gap:8px;">
-            <a class="mlink" href={contact.telefonHref} style="font-size:14.5px; color:#9fd3ec;">☎ {contact.telefon}</a>
-            <a class="mlink" href={contact.mobilHref} style="font-size:14.5px; color:#9fd3ec;">📱 {contact.mobil}</a>
+            <a class="mlink" href={contact.telefonHref} style="font-size:14.5px; color:#9fd3ec;"><span aria-hidden="true">☎</span> {contact.telefon}</a>
+            <a class="mlink" href={contact.mobilHref} style="font-size:14.5px; color:#9fd3ec;"><span aria-hidden="true">📱</span> {contact.mobil}</a>
           </div>
         </div>
       </div>
@@ -345,8 +386,9 @@ const year = new Date().getFullYear();
   @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(9px); } }
   @keyframes spinslow { to { transform: rotate(360deg); } }
   .spinslow { animation: spinslow 9s linear infinite; }
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1); }
-  .reveal.in { opacity: 1; transform: none; }
+  /* Scroll-Reveal nur, wenn JavaScript läuft (html.js); ohne JS ist alles sofort sichtbar */
+  :global(.js) .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1); }
+  :global(.js) .reveal.in { opacity: 1; transform: none; }
   .grow { transition: transform .6s cubic-bezier(.16,.84,.44,1); }
   .svc:hover .grow { transform: scale(1.09); }
   .svc { transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s ease; }
@@ -363,6 +405,7 @@ const year = new Date().getFullYear();
   .hdr.scrolled { padding: 10px 0 !important; background: rgba(255,255,255,.86) !important; box-shadow: 0 8px 30px -12px rgba(12,43,64,.28) !important; backdrop-filter: blur(14px); }
   .hdr.scrolled .hdr-logo { height: 44px !important; }
   .hdr.scrolled .hdr-name { color: #0C2B40 !important; }
+  .hdr.scrolled .hdr-sub { color: #216CB4 !important; }
   .hdr.scrolled .hdr-nav a { color: #0C2B40 !important; }
   .mlink { transition: color .25s ease, transform .25s ease; }
   .mlink:hover { color: #1594CB; transform: translateX(3px); }
@@ -391,24 +434,20 @@ const year = new Date().getFullYear();
   if (reduce) {
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
   } else {
-    const reveal = () => {
-      const vh = window.innerHeight;
-      document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
-        const r = el.getBoundingClientRect();
-        if (r.top < vh * 0.92 && r.bottom > 0) {
-          const sibs = Array.from(el.parentElement.children).filter((c) => c.classList.contains('reveal'));
-          const idx = Math.max(0, sibs.indexOf(el));
-          el.style.transitionDelay = Math.min(idx, 4) * 75 + 'ms';
-          el.classList.add('in');
-        }
-      });
+    const show = (el) => {
+      const sibs = Array.from(el.parentElement.children).filter((c) => c.classList.contains('reveal'));
+      const idx = Math.max(0, sibs.indexOf(el));
+      el.style.transitionDelay = Math.min(idx, 4) * 75 + 'ms';
+      el.classList.add('in');
     };
-    window.addEventListener('scroll', reveal, { passive: true });
-    window.addEventListener('resize', reveal);
-    reveal();
-    let n = 0;
-    const tick = () => { reveal(); if (++n < 12) setTimeout(tick, 110); };
-    tick();
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(show);
+    }
   }
 
   // Sticky-Header: ab 40px Scroll kompakter
