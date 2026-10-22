@@ -8,17 +8,18 @@ Ken-Burns-Hero und klickbaren Kontakt-Karten.
 
 ```
 .
-├── public/
-│   └── bilder/            # Logo + alle Fotos (werden 1:1 ausgeliefert)
+├── public/                # robots.txt, Favicons, Manifest, OG-Bild (1:1 ausgeliefert)
 ├── src/
+│   ├── assets/bilder/     # Logo + alle Fotos (werden beim Build optimiert: WebP, srcset)
 │   ├── data/site.js       # Inhalte: Leistungen, Meilensteine, Testimonials, Kontakt
 │   ├── layouts/Base.astro # Grundgerüst (Head, Fonts, SEO-Meta, globale Styles)
 │   └── pages/
 │       ├── index.astro        # Startseite (One-Pager, alle Sektionen)
-│       ├── impressum.astro     # Impressum  → /impressum
-│       └── datenschutz.astro   # Datenschutz → /datenschutz (Platzhalter)
+│       ├── impressum.astro     # Impressum  → /impressum/
+│       ├── datenschutz.astro   # Datenschutz → /datenschutz/
+│       └── 404.astro           # Fehlerseite
 ├── astro.config.mjs
-├── netlify.toml           # Build-Konfiguration für Netlify
+├── netlify.toml           # Build, Sicherheits-Header, Caching, Redirects für Netlify
 └── _quelle/               # Quell-Material (Briefing, Texte, Design-Export) – nicht Teil der Seite
 ```
 
@@ -57,9 +58,9 @@ und die DNS-Einträge beim Domain-Anbieter wie von Netlify angezeigt setzen.
 
 ## Inhalte pflegen
 - **Texte/Leistungen/Kundenstimmen:** `src/data/site.js`
-- **Bilder austauschen:** Dateien in `public/bilder/` ersetzen (gleicher Dateiname = kein weiterer Aufwand)
+- **Bilder austauschen:** Dateien in `src/assets/bilder/` ersetzen (gleicher Dateiname = kein weiterer Aufwand); das OG-Vorschaubild liegt in `public/bilder/`
 - **Kontaktdaten:** zentral in `src/data/site.js` (werden überall verwendet)
 
 ## Offene To-dos
-- [ ] **Datenschutzerklärung** ergänzen (Text über eRecht24 erstellen, in `src/pages/datenschutz.astro` einsetzen)
-- [ ] Optional: Bilder in höherer Auflösung für Retina-Displays
+- [ ] **Datenschutzerklärung** über eRecht24 aktualisieren: Hoster ist Netlify (nicht IONOS), Abschnitte Server-Logs, Anfrage per E-Mail/Telefon, TLS, Stand-Datum; Kontaktformular-Passus streichen
+- [ ] Optional: Bilder in höherer Auflösung für Retina-Displays, Hero-Foto im Querformat
